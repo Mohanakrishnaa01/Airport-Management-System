@@ -1,0 +1,157 @@
+.login_Container{
+    width: 38vw;
+    min-width: 320px;
+    max-width: 520px;
+    margin: 6vh auto;
+    padding: 28px 28px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px);
+    position: relative;
+}
+
+.login_Container > img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+}
+
+.login_Container > div > h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    padding-bottom: 2px;
+}
+
+.login_Container > form {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form{
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+    padding: 6px 2px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.login_Container form label{
+    font-size: 0.95rem;
+    color: #374151;
+    font-weight: 600;
+}
+
+.login_Container form input{
+    width: 80%;
+    height: 30px;
+    font-size: 15px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #e5e7eb;
+    background: #f9fafb;
+    color: #111827;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.login_Container form input::placeholder{
+    color: #9ca3af;
+}
+
+.login_Container form input:focus{
+    border-color: #60a5fa;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.login_Container > form > button[type="submit"]{
+    width: 35%;
+    height: 46px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 180ms ease, filter 160ms ease;
+    box-shadow: 0 10px 16px rgba(99, 102, 241, 0.25);
+}
+
+.login_Container > form > button[type="submit"]:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 12px 18px rgba(99, 102, 241, 0.32);
+    filter: brightness(1.03);
+}
+
+.login_Container > form > button[type="submit"]:active{
+    transform: translateY(0);
+}
+
+.login_Container > a{
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.login_Container > a:hover{
+    color: #1d4ed8;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.login_Container > h6{
+    margin: 0;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+/* Subtle glossy highlight */
+.login_Container::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(14,165,233,0.25));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px){
+    .login_Container{
+        width: 86vw;
+        margin: 5vh auto;
+        padding: 24px 20px 18px;
+    }
+
+    .login_Container > div > h1{
+        font-size: 1.6rem;
+    }
+}
