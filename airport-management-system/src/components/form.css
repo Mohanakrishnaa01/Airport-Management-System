@@ -1,0 +1,197 @@
+.Form-Container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Form-Overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.Form-Modal {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 640px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: formSlideIn 0.3s ease-out;
+}
+
+@keyframes formSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.Form-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 16px 0 16px;
+}
+
+.Form-Tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.Form-Tab {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.Form-Tab.active {
+    background: #ffffff;
+    color: #1f2a44;
+    border-bottom-color: #ffffff;
+    box-shadow: 0 -2px 0 0 #5b8def inset;
+}
+
+.Form-Close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #9aa7bd;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.Form-Close:hover {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.Form-Body {
+    padding: 16px;
+    border-top: 1px solid #eef2f7;
+}
+
+.Form-Field {
+    margin-bottom: 16px;
+}
+
+.Form-Field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #374151;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.Form-Field input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d9e1ec;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #1f2a44;
+    background: #fff;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+
+.Form-Field input[type="checkbox"] {
+    width: auto;
+    transform: translateY(2px);
+}
+
+.Form-Field input:focus {
+    outline: none;
+    border-color: #5b8def;
+    box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.15);
+}
+
+.Form-Field input::placeholder {
+    color: #9ca3af;
+}
+
+.Form-Footer {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding: 16px;
+    border-top: 1px solid #eef2f7;
+}
+
+.Form-Cancel,
+.Form-Submit {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.Form-Cancel {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.Form-Cancel:hover {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.Form-Submit {
+    background: #5b8def;
+    color: white;
+}
+
+.Form-Submit:hover {
+    background: #3c6fdf;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(91, 141, 239, 0.3);
+}
+
+@media (max-width: 600px) {
+    .Form-Modal {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .Form-Header,
+    .Form-Body,
+    .Form-Footer {
+        padding: 12px;
+    }
+    
+    .Form-Footer {
+        flex-direction: column;
+    }
+    
+    .Form-Cancel,
+    .Form-Submit {
+        width: 100%;
+    }
+}
+

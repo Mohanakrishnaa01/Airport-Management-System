@@ -51,14 +51,14 @@ CREATE TABLE technician (
 
 CREATE TABLE schedule (
 	s_id INT PRIMARY KEY auto_increment,
-    company_id INT NOT NULL,
+        
     airplane_id INT NOT NULL,
     pilot_id INT NOT NULL,
     takeOff datetime NOT NULL,
     canTakeOff boolean NOT NULL,
     FOREIGN KEY (company_id) REFERENCES company(company_id) ON DELETE CASCADE,
     FOREIGN KEY (airplane_id) REFERENCES airplane(airplane_id) ON DELETE CASCADE,
-    FOREIGN KEY (pilot_id) REFERENCES pilot(pilot_id) ON DELETE CASCADE
+    FOREIGN KEY (pilot_id) REFERENCES pilot(pilot_id) ON DELETE CASCADE,
 );
 
 CREATE TABLE test (
@@ -152,3 +152,118 @@ INSERT INTO technician (tech_name, dept_id) VALUES
 ('Gisele Yashar', 2),
 ('Ramsey', 3),
 ('Mr. Nobody', 1);
+
+
+
+
+--------------------------------------------------------------------------------------------
+-- 4
+
+
+alter table test add column (s_id INT);
+
+ALTER TABLE test
+ADD CONSTRAINT fk_test_s_id
+FOREIGN KEY (s_id) REFERENCES schedule(s_id)
+ON DELETE CASCADE;
+
+
+--------------------------------------------------------------------------------------------
+-- 5
+
+ALTER TABLE test
+MODIFY COLUMN s_id INT NOT NULL;
+
+ALTER TABLE test
+MODIFY COLUMN dept_id INT NULL;
+ALTER TABLE test
+MODIFY COLUMN tech_id INT NULL;
+ALTER TABLE test
+MODIFY COLUMN weather INT NULL;
+ALTER TABLE test
+MODIFY COLUMN fuel INT NULL;
+ALTER TABLE test
+MODIFY COLUMN tyre INT NULL;
+
+
+
+DELIMITER $$
+
+CREATE or REPLACE TRIGGER addTest
+AFTER INSERT ON schedule
+for each ROW
+BEGIN
+	INSERT INTO test (s_id, dept_id) VALUES (NEW.s_id, 1);
+    INSERT INTO test (s_id, dept_id) VALUES (NEW.s_id, 2);
+    INSERT INTO test (s_id, dept_id) VALUES (NEW.s_id, 3);
+END$$
+
+DELIMITER ;
+
+
+
+ALTER TABLE schedule
+MODIFY COLUMN pilot_id INT NULL;
+ALTER TABLE schedule
+MODIFY COLUMN canTakeOff INT NULL;
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE table_name DROP PRIMARY KEY;
+
+
+ALTER TABLE user ADD COLUMN worker_id INT AUTO_INCREMENT PRIMARY KEY;
+ALTER TABLE technician ADD COLUMN worker_id INT;
+ALTER TABLE pilot ADD COLUMN worker_id INT;
+
+ALTER TABLE technician ADD COLUMN email varchar(100);
+ALTER TABLE pilot ADD COLUMN email varchar(100);
+
+
+UPDATE technician
+SET email = CONCAT(
+    LOWER(REPLACE(name, ' ', '.')),   -- use name as base
+    FLOOR(RAND() * 100),            -- random number (0–9999)
+    '@gmail.com'                    -- fixed domain
+);
+
+
+ALTER TABLE userdetails ADD COLUMN name varchar(50);
+
+INSERT INTO user (name, email)
+SELECT name, email FROM pilot;
+
+INSERT INTO user (name, email)
+SELECT name, email FROM technician;
+
+
+update userDetails
+set password = substring_index(email, '@', 1);
+
+update userDetails
+set role = "WORKER"
+where role != "ADMIN";
+
+UPDATE technician t
+JOIN userdetails u ON t.email = u.email
+SET t.worker_id = u.worker_id;
+
+UPDATE pilot p
+JOIN userdetails u ON p.email = u.email
+SET p.worker_id = u.worker_id;
+
+ALTER TABLE technician
+ADD CONSTRAINT fk_technician_user FOREIGN KEY (worker_id) REFERENCES userdetails(worker_id);
+
+ALTER TABLE pilot
+ADD CONSTRAINT fk_pilot_user FOREIGN KEY (worker_id) REFERENCES userdetails(worker_id);
+
+UPDATE userdetails u
+LEFT JOIN technician t ON u.email = t.email
+LEFT JOIN pilot p ON u.email = p.email
+SET u.role = CASE
+    WHEN t.email IS NOT NULL THEN 'technician'
+    WHEN p.email IS NOT NULL THEN 'pilot'
+    ELSE u.role
+END;
